@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Flashcards</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .flashcard { padding: 20px; border: 2px solid black; display: inline-block; cursor: pointer; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>DevOps Flashcards</h1>
+    <div id="flashcard" class="flashcard">
+        <p id="word">Click to show a flashcard</p>
+        <p id="definition" class="hidden"></p>
+    </div>
+    <br><br>
+    <button onclick="loadFlashcard()">New Flashcard</button>
+
+    <script>
+        function loadFlashcard() {
+            fetch('/flashcard')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('word').textContent = data.word;
+                    document.getElementById('definition').textContent = data.definition;
+                    document.getElementById('definition').classList.add('hidden');
+                });
+        }
+
+        document.getElementById('flashcard').addEventListener('click', function() {
+            document.getElementById('definition').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
